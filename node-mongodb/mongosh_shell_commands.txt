@@ -1,0 +1,1 @@
+mongosh "mongodb+srv://cluster0.9ptie.mongodb.net/sample_airbnb" --username testUser
