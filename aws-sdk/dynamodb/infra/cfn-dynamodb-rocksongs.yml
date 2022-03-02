@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  RockSongsTables:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        -
+          AttributeName: "index"
+          AttributeType: "N"
+        -
+          AttributeName: "artist"
+          AttributeType: "S"
+        -
+          AttributeName: "name"
+          AttributeType: "S"
+        -
+          AttributeName: "release_date"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "index"
+          KeyType: "HASH"
+        -
+          AttributeName: "artist"
+          KeyType: "RANGE"
+      TableName: rock-songs
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      GlobalSecondaryIndexes:
+        -
+          IndexName: "artist-lookup-index"
+          KeySchema:
+            -
+              AttributeName: "artist"
+              KeyType: "HASH"
+            -
+              AttributeName: "name"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+        -
+          IndexName: "year_lookup-index"
+          KeySchema:
+            - 
+              AttributeName: "release_date"
+              KeyType: "HASH"
+            -
+              AttributeName: "name"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
